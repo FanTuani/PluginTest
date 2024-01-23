@@ -1,0 +1,4 @@
+name: PluginTest
+version: '1.0-SNAPSHOT'
+main: lqw.plugintest.PluginTest
+api-version: '1.16'
