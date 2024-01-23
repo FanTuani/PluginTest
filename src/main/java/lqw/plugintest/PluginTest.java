@@ -6,12 +6,11 @@ public final class PluginTest extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-
+        getLogger().info("PluginTest loaded");
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        getLogger().info("PluginTest unloaded");
     }
 }
