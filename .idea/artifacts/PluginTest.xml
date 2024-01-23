@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="PluginTest">
-    <output-path>$PROJECT_DIR$/../../MCServers/Paper1.16.5/plugins</output-path>
-    <root id="archive" name="PluginTest.jar">
-      <element id="module-output" name="PluginTest" />
-    </root>
-  </artifact>
-</component>
