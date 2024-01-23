@@ -1,0 +1,4 @@
+name: PluginTest
+version: '${project.version}'
+main: lqw.plugintest.PluginTest
+api-version: '1.16'
