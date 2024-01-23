@@ -1,6 +1,10 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="PluginTest">
+<<<<<<< Updated upstream
     <output-path>$PROJECT_DIR$/../../MCServers/Paper1.16.5/plugins</output-path>
+=======
+    <output-path>$USER_HOME$/Desktop</output-path>
+>>>>>>> Stashed changes
     <root id="archive" name="PluginTest.jar">
       <element id="module-output" name="PluginTest" />
     </root>
