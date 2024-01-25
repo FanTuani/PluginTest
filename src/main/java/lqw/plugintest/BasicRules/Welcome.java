@@ -16,7 +16,7 @@ public class Welcome implements Listener {
             if (player.getName().equals(event.getPlayer().getName())) {
                 player.sendTitle(ChatColor.GREEN + "Welcome!", subTitle, 10, 30, 10);
             } else {
-                player.sendTitle(ChatColor.GREEN + event.getPlayer().getName() + " Joined!", subTitle, 10, 40, 20);
+                player.sendTitle(ChatColor.GREEN + event.getPlayer().getName() + " Joined!", subTitle, 10, 30, 10);
             }
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
         }
