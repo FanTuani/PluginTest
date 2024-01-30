@@ -22,7 +22,9 @@ public class JumpPad implements Listener {
         if(step.getAction() == Action.PHYSICAL) {
             if(step.getClickedBlock().getType() == Material.LIGHT_WEIGHTED_PRESSURE_PLATE){
                 Player player = step.getPlayer();
-                player.setVelocity(new Vector(0,1.8,0));
+                Vector nowv = player.getVelocity();
+                nowv.setY(1.8);
+                player.setVelocity(nowv);
             }
         }
     }
