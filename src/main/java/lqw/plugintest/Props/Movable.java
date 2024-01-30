@@ -16,16 +16,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public abstract class Movable implements Listener {
-    protected static HashMap<Player, Entity> controlEn = new HashMap<>();
-    protected static PluginTest plugin = PluginTest.pluginTest;
+    private static final HashMap<Player, Entity> controlEn = new HashMap<>();
     protected String blockName, entityName;
 
     public Entity entity;
+
     abstract void effect(Player player);
+
     @EventHandler
     public void pickUp(PlayerInteractEvent event) {
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
@@ -34,15 +33,11 @@ public abstract class Movable implements Listener {
         if (block.getType().name().equals(blockName)) {
             block.setType(Material.AIR);
             if (!controlEn.containsKey(player)) {
-                entity = player.getWorld().spawnEntity(player.getLocation() ,EntityType.valueOf(entityName));
-
-                    player.sendMessage("1");
-                    entity.setVelocity(new Vector(0,1,0));
+                entity = player.getWorld().spawnEntity(player.getLocation(), EntityType.valueOf(entityName));
                 controlEn.put(player, entity);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                            player.sendMessage("1");
                         if (!controlEn.containsKey(player)) {
                             controlEn.remove(player);
                             cancel();
@@ -53,15 +48,15 @@ public abstract class Movable implements Listener {
                             entity.setFallDistance(0);
                         }
                     }
-                }.runTaskTimer(plugin, 0, 1);
+                }.runTaskTimer(PluginTest.pluginTest, 0, 1);
             }
         }
     }
 
     @EventHandler
-    public void giveUP(PlayerInteractAtEntityEvent event){
+    public void giveUP(PlayerInteractAtEntityEvent event) {
         Player player = event.getPlayer();
-        if(controlEn.containsKey(player)){
+        if (controlEn.containsKey(player)) {
             controlEn.remove(player);
             effect(player);
         }
