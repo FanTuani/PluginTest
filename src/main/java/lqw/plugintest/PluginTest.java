@@ -6,6 +6,7 @@ import lqw.plugintest.BasicRules.SpawnSupply;
 import lqw.plugintest.BasicRules.Welcome;
 import lqw.plugintest.MapInteractions.ChainElevator;
 import lqw.plugintest.MapInteractions.JumpPad;
+import lqw.plugintest.Props.Movable;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -33,11 +34,13 @@ public final class PluginTest extends JavaPlugin {
     }
 
     private void registerEvents() {
+        Movable movable = new Movable(this);
         getServer().getPluginManager().registerEvents(new Welcome(), this);
         getServer().getPluginManager().registerEvents(new SpawnSupply(this), this);
         getServer().getPluginManager().registerEvents(new BasicCancellers(), this);
         getServer().getPluginManager().registerEvents(new ChainElevator(this), this);
         getServer().getPluginManager().registerEvents(new BreathToHeal(this), this);
         getServer().getPluginManager().registerEvents(new JumpPad(this), this);
+        getServer().getPluginManager().registerEvents(movable, this);
     }
 }
