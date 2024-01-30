@@ -7,6 +7,7 @@ import lqw.plugintest.BasicRules.Welcome;
 import lqw.plugintest.MapInteractions.ChainElevator;
 import lqw.plugintest.MapInteractions.JumpPad;
 import lqw.plugintest.Props.Landmine;
+import lqw.plugintest.Props.FireExtinguisher;
 import lqw.plugintest.Props.Movable;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PluginTest extends JavaPlugin {
-
+    public static PluginTest pluginTest;
     @Override
     public void onEnable() {
         getLogger().info("PluginTest loaded");
@@ -23,6 +24,7 @@ public final class PluginTest extends JavaPlugin {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 1f);
         }
         registerEvents();
+        PluginTest.pluginTest = this;
     }
 
     @Override
@@ -35,7 +37,6 @@ public final class PluginTest extends JavaPlugin {
     }
 
     private void registerEvents() {
-        Movable movable = new Movable(this);
         getServer().getPluginManager().registerEvents(new Welcome(), this);
         getServer().getPluginManager().registerEvents(new SpawnSupply(this), this);
         getServer().getPluginManager().registerEvents(new BasicCancellers(), this);
@@ -43,6 +44,6 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BreathToHeal(this), this);
         getServer().getPluginManager().registerEvents(new JumpPad(this), this);
         getServer().getPluginManager().registerEvents(new Landmine(), this);
-        getServer().getPluginManager().registerEvents(movable, this);
+        getServer().getPluginManager().registerEvents(new FireExtinguisher(),this);
     }
 }
