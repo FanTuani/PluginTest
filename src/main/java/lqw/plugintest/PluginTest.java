@@ -35,7 +35,7 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Welcome(), this);
         getServer().getPluginManager().registerEvents(new SpawnSupply(), this);
         getServer().getPluginManager().registerEvents(new BasicCancellers(), this);
-        getServer().getPluginManager().registerEvents(new ChainElevator(), this);
+        getServer().getPluginManager().registerEvents(new ChainElevator(this), this);
         getServer().getPluginManager().registerEvents(new BreathToHeal(this), this);
     }
 }
