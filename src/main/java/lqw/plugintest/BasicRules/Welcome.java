@@ -1,4 +1,4 @@
-package lqw.plugintest.BasicRules.Info;
+package lqw.plugintest.BasicRules;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
