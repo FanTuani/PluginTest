@@ -5,6 +5,7 @@ import lqw.plugintest.BasicRules.BreathToHeal;
 import lqw.plugintest.BasicRules.SpawnSupply;
 import lqw.plugintest.BasicRules.Welcome;
 import lqw.plugintest.MapInteractions.ChainElevator;
+import lqw.plugintest.MapInteractions.JumpPad;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -37,5 +38,6 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BasicCancellers(), this);
         getServer().getPluginManager().registerEvents(new ChainElevator(this), this);
         getServer().getPluginManager().registerEvents(new BreathToHeal(this), this);
+        getServer().getPluginManager().registerEvents(new JumpPad(this), this);
     }
 }
