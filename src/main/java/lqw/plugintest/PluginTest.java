@@ -1,7 +1,7 @@
 package lqw.plugintest;
 
 import lqw.plugintest.BasicRules.SpawnSupply;
-import lqw.plugintest.BasicRules.Welcome;
+import lqw.plugintest.BasicRules.Info.Welcome;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PluginTest extends JavaPlugin {

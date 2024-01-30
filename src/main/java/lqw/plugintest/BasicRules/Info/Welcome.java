@@ -1,4 +1,4 @@
-package lqw.plugintest.BasicRules;
+package lqw.plugintest.BasicRules.Info;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -16,7 +16,7 @@ public class Welcome implements Listener {
             if (player.getName().equals(event.getPlayer().getName())) {
                 player.sendTitle(ChatColor.GREEN + "Welcome!", subTitle, 10, 30, 10);
             } else {
-                player.sendTitle(ChatColor.GREEN + event.getPlayer().getName() + " Joined!", subTitle, 10, 30, 10);
+                player.sendTitle(ChatColor.GREEN + event.getPlayer().getName() + " Joined!", subTitle, 5, 10, 5);
             }
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
         }
