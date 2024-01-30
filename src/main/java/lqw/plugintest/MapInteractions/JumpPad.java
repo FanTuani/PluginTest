@@ -17,12 +17,12 @@ public class JumpPad implements Listener {
     }
 
     @EventHandler
-    public void onPlayerStepOnGoldenPressurePlate(PlayerInteractEvent step) {
-        if (step.getAction() == Action.PHYSICAL) {
-            if (step.getClickedBlock().getType() == Material.LIGHT_WEIGHTED_PRESSURE_PLATE) {
-                Player player = step.getPlayer();
+    public void onPlayerStepOnGoldenPressurePlate(PlayerInteractEvent event) {
+        if (event.getAction() == Action.PHYSICAL) {
+            if (event.getClickedBlock().getType() == Material.LIGHT_WEIGHTED_PRESSURE_PLATE) {
+                Player player = event.getPlayer();
                 Vector vec = player.getLocation().getDirection();
-                vec.setY(2);
+                vec.setY(1.6);
                 player.setVelocity(vec);
             }
         }
