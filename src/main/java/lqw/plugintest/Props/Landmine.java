@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 public class Landmine implements Listener {
     @EventHandler
@@ -19,15 +20,18 @@ public class Landmine implements Listener {
                     loc.setX(player.getLocation().getX() + x);
                     loc.setY(player.getLocation().getY() + y);
                     loc.setZ(player.getLocation().getZ() + z);
-                    if (loc.getBlock().getType() == Material.STONE_BUTTON) {
+                    if (loc.getBlock().getType() == Material.STONE_BUTTON) { // normal landmine
                         player.getWorld().createExplosion(loc, 2);
+                        Vector knockBack = player.getLocation().subtract(loc).toVector();
+                        player.setVelocity(player.getVelocity().add(knockBack.normalize().multiply(0.5)));
                         break;
                     }
-                    if (loc.getBlock().getType() == Material.OAK_BUTTON) {
+                    if (loc.getBlock().getType() == Material.OAK_BUTTON) { // fart landmine
                         loc.getBlock().setType(Material.AIR);
                         player.getWorld().spawnEntity(loc, EntityType.DRAGON_FIREBALL);
                         break;
                     }
+
                 }
             }
         }

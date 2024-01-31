@@ -60,7 +60,8 @@ public abstract class Movable implements Listener {
                             } else {
                                 Vector direction = player.getLocation().getDirection();
                                 Location teleLocation = player.getLocation().add(direction.multiply(3));
-                                controlEn.get(player.getUniqueId()).teleport(teleLocation);
+                                Entity entity = controlEn.get(player.getUniqueId());
+                                entity.teleport(teleLocation);
 //                                controlEn.get(player.getUniqueId()).setFallDistance(0);
                             }
                         }
