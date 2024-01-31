@@ -3,6 +3,8 @@ package lqw.plugintest.Props;
 import lqw.plugintest.PluginTest;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -43,20 +45,24 @@ public abstract class Movable implements Listener {
             if (block == null) return;
             if (!controlEn.containsKey(player.getUniqueId())) {
                 if (block.getType().name().equals(blockName)) {
+                    Location loc = block.getLocation();
+                    loc.setY(loc.getY() + 1);
+                    loc.getWorld().playSound(loc, Sound.BLOCK_STONE_BREAK, 1, 1);
+                    loc.getWorld().spawnParticle(Particle.BLOCK_CRACK, loc, 100, 0, 0, 0, 1, block.getBlockData());
                     block.setType(Material.AIR);
                     entitySpawn(player);
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-//                            player.sendMessage("1");
                             if (!controlEn.containsKey(player.getUniqueId())) {
                                 controlEn.remove(player.getUniqueId());
+                                player.playSound(player.getLocation(), Sound.ENTITY_WITCH_THROW, 1, 1);
                                 cancel();
                             } else {
-                                Vector vector = player.getLocation().getDirection();
-                                Location teleLocation = player.getLocation().add(vector.multiply(3));
+                                Vector direction = player.getLocation().getDirection();
+                                Location teleLocation = player.getLocation().add(direction.multiply(3));
                                 controlEn.get(player.getUniqueId()).teleport(teleLocation);
-                                controlEn.get(player.getUniqueId()).setFallDistance(0);
+//                                controlEn.get(player.getUniqueId()).setFallDistance(0);
                             }
                         }
                     }.runTaskTimer(PluginTest.pluginTest, 0, 1);
