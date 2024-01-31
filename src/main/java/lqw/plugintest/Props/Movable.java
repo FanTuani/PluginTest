@@ -66,6 +66,7 @@ public abstract class Movable implements Listener {
                             }
                         }
                     }.runTaskTimer(PluginTest.pluginTest, 0, 1);
+                    event.setCancelled(true);
                 }
             }
         } else {
