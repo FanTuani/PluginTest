@@ -22,7 +22,6 @@ import java.util.UUID;
 
 public abstract class Movable implements Listener {
     protected static HashMap<UUID, Entity> controlEn = new HashMap<>();
-    public static PluginTest plugin = PluginTest.pluginTest;
     protected String blockName, entityName;
 
     void effect(Player player) {
@@ -69,7 +68,7 @@ public abstract class Movable implements Listener {
                     event.setCancelled(true);
                 }
             }
-        } else {
+        } else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
             Player player = event.getPlayer();
             if (controlEn.containsKey(player.getUniqueId())) {
                 effect(player);
