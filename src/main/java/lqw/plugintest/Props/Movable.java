@@ -31,7 +31,7 @@ public abstract class Movable implements Listener {
 
     void entitySpawn(Player player) {
         Entity entity =
-                player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().multiply(3)), EntityType.valueOf(entityName));
+                player.getWorld().spawnEntity(player.getLocation(), EntityType.valueOf(entityName));
         controlEn.put(player.getUniqueId(), entity);
     }
 
@@ -61,9 +61,14 @@ public abstract class Movable implements Listener {
                                 Vector direction = player.getLocation().getDirection();
                                 Location teleLocation = player.getLocation().add(direction.multiply(3));
                                 Entity entity = controlEn.get(player.getUniqueId());
-
-                                Vector vector = teleLocation.toVector().subtract(entity.getLocation().toVector());
-                                entity.setVelocity(vector);
+                                if (teleLocation.getBlock().getType() != Material.AIR) {
+                                    teleLocation = player.getLocation();
+                                    teleLocation.setY(player.getLocation().getY() + 1);
+                                    entity.teleport(teleLocation);
+                                } else {
+                                    Vector vector = teleLocation.toVector().subtract(entity.getLocation().toVector());
+                                    entity.setVelocity(vector);
+                                }
                             }
                         }
                     }.runTaskTimer(PluginTest.pluginTest, 0, 1);
