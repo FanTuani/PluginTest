@@ -10,10 +10,10 @@ import org.bukkit.event.Listener;
 
 public class CashBox extends Movable implements Listener {
     public CashBox(){
-        blockName = Material.YELLOW_SHULKER_BOX.name();
+        blockName = Material.GOLD_BLOCK.name();
     }
     void entitySpawn(Player player) {
-        FallingBlock fallingBlock = player.getWorld().spawnFallingBlock(player.getLocation().add(player.getLocation().getDirection()),Material.STONE.createBlockData());
+        FallingBlock fallingBlock = player.getWorld().spawnFallingBlock(player.getLocation().add(player.getLocation().getDirection()),Material.GOLD_BLOCK.createBlockData());
         fallingBlock.setDropItem(false);
         fallingBlock.setGravity(false);
         fallingBlock.setHurtEntities(false);
