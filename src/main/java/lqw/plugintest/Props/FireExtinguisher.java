@@ -2,7 +2,10 @@ package lqw.plugintest.Props;
 
 import lqw.plugintest.PluginTest;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -40,6 +43,12 @@ public class FireExtinguisher extends Movable implements Listener {
                     cancel();
                 }
                 if (!tnt.getNearbyEntities(0.5, 0.5, 0.5).isEmpty()) {
+                    for (Entity entity : tnt.getNearbyEntities(0.5, 0.5, 0.5)) {
+                        if (entity.getType().name().equals(EntityType.PRIMED_TNT.name())) {
+                            entity.getWorld().strikeLightning(entity.getLocation());
+                            break;
+                        }
+                    }
                     tnt.setFuseTicks(0);
                     cancel();
                 }
