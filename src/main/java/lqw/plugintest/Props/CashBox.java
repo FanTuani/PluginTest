@@ -19,4 +19,9 @@ public class CashBox extends Movable implements Listener {
         fallingBlock.setHurtEntities(false);
         controlEn.put(player.getUniqueId(), fallingBlock);
     }
+
+    @Override
+    void effect(Player player) {
+        super.effect(player);
+    }
 }
