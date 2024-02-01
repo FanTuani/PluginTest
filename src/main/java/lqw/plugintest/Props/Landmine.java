@@ -21,6 +21,7 @@ public class Landmine implements Listener {
                     loc.setY(player.getLocation().getY() + y);
                     loc.setZ(player.getLocation().getZ() + z);
                     if (loc.getBlock().getType() == Material.STONE_BUTTON) { // normal landmine
+                        loc.getBlock().setType(Material.AIR);
                         player.getWorld().createExplosion(loc, 2);
                         Vector knockBack = player.getLocation().subtract(loc).toVector();
                         player.setVelocity(player.getVelocity().add(knockBack.normalize().multiply(0.5)));
@@ -31,7 +32,6 @@ public class Landmine implements Listener {
                         player.getWorld().spawnEntity(loc, EntityType.DRAGON_FIREBALL);
                         break;
                     }
-
                 }
             }
         }

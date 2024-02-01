@@ -22,7 +22,6 @@ public class JumpPad implements Listener {
         if (event.getAction() == Action.PHYSICAL) {
             if (event.getClickedBlock() == null) return;
             if (event.getClickedBlock().getType() == Material.LIGHT_WEIGHTED_PRESSURE_PLATE) {
-                event.setCancelled(true);
                 Player player = event.getPlayer();
                 player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SHOOT, 0.1f, 2);
                 Vector vec = player.getLocation().getDirection();
