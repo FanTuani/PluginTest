@@ -61,7 +61,8 @@ public abstract class Movable implements Listener {
                                 Vector direction = player.getLocation().getDirection();
                                 Location teleLocation = player.getLocation().add(direction.multiply(3));
                                 Entity entity = controlEn.get(player.getUniqueId());
-                                if (teleLocation.getBlock().getType() != Material.AIR) {
+                                Material teleLocBlockMat = teleLocation.getBlock().getType();
+                                if (teleLocBlockMat != Material.AIR && !teleLocBlockMat.isTransparent()) {
                                     entity.teleport(player.getLocation());
                                 } else {
                                     Vector vector = teleLocation.toVector().subtract(entity.getLocation().toVector());
