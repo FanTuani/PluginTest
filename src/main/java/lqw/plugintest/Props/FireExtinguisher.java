@@ -33,7 +33,7 @@ public class FireExtinguisher extends Movable implements Listener {
         tnt.setGravity(true);
 
         Vector direction = player.getLocation().getDirection();
-        tnt.setVelocity(direction.multiply(1.5));
+        tnt.setVelocity(direction.multiply(1.8));
         new BukkitRunnable() {
             @Override
             public void run() {
