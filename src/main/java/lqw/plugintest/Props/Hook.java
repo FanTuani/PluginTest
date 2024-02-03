@@ -37,6 +37,7 @@ public class Hook implements Listener {
         if (!(arrow.getShooter() instanceof Player)) return;
         if (!arrow.getScoreboardTags().contains("hook")) return;
         Player player = (Player) arrow.getShooter();
+        player.playSound(player.getLocation(),Sound.BLOCK_BAMBOO_FALL,1,1);
         Location targetLoc = arrow.getLocation();
         player.setGravity(false);
         arrow.remove();
@@ -49,7 +50,7 @@ public class Hook implements Listener {
                 if (ticks > 10) {
                     player.setGravity(true);
                 }
-                if (player.getLocation().distance(targetLoc) < 2 || player.getLocation().distance(targetLoc) > 50) {
+                if (player.getLocation().distance(targetLoc) < 2 || player.getLocation().distance(targetLoc) > 30) {
                     cancel();
                     player.setGravity(true);
                 }
@@ -58,7 +59,9 @@ public class Hook implements Listener {
                     player.setGravity(true);
                     cancel();
                 }
-                Vector vel = arrow.getLocation().subtract(player.getLocation()).toVector().normalize().multiply(0.2);
+                Vector vel = arrow.getLocation().subtract(player.getLocation()).toVector();
+                double dis = arrow.getLocation().distance(player.getLocation());
+                vel = vel.multiply(Math.log(dis) / 200);
                 player.setVelocity(player.getVelocity().add(vel));
                 ticks++;
             }
