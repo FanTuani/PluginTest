@@ -24,7 +24,7 @@ public class Landmine implements Listener {
                         loc.getBlock().setType(Material.AIR);
                         player.getWorld().createExplosion(loc, 2);
                         Vector knockBack = player.getLocation().subtract(loc).toVector();
-                        player.setVelocity(player.getVelocity().add(knockBack.normalize().multiply(0.5)));
+                        player.setVelocity(player.getVelocity().add(knockBack.normalize()));
                         break;
                     }
                     if (loc.getBlock().getType() == Material.OAK_BUTTON) { // fart landmine

@@ -3,6 +3,7 @@ package lqw.plugintest.Props;
 import lqw.plugintest.PluginTest;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -37,32 +38,42 @@ public class Hook implements Listener {
         if (!(arrow.getShooter() instanceof Player)) return;
         if (!arrow.getScoreboardTags().contains("hook")) return;
         Player player = (Player) arrow.getShooter();
-        player.playSound(player.getLocation(),Sound.BLOCK_BAMBOO_FALL,1,1);
+        player.playSound(player.getLocation(), Sound.BLOCK_BAMBOO_FALL, 1, 1);
         Location targetLoc = arrow.getLocation();
+        if (targetLoc.distance(player.getLocation()) > 30) return;
         player.setGravity(false);
         arrow.remove();
 
+        targetLoc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, targetLoc, 10, 0, 0, 0, 0.05);
+
         new BukkitRunnable() {
             int ticks = 0;
+
+            private void cancelRun(Player player) {
+                cancel();
+                player.setGravity(true);
+                player.playSound(player.getLocation(), Sound.BLOCK_BAMBOO_FALL, 1, 1);
+            }
 
             @Override
             public void run() {
                 if (ticks > 10) {
                     player.setGravity(true);
                 }
-                if (player.getLocation().distance(targetLoc) < 2 || player.getLocation().distance(targetLoc) > 30) {
-                    cancel();
-                    player.setGravity(true);
+                if (player.getLocation().distance(targetLoc) < 1 || player.getLocation().distance(targetLoc) > 30) {
+                    cancelRun(player);
                 }
                 double speed = player.getVelocity().length();
                 if (speed < 0.25f && ticks > 20) {
-                    player.setGravity(true);
-                    cancel();
+                    cancelRun(player);
                 }
                 Vector vel = arrow.getLocation().subtract(player.getLocation()).toVector();
-                double dis = arrow.getLocation().distance(player.getLocation());
+                vel.setY(vel.getY() + 1);
+                double dis = Math.max(player.getVelocity().length(),
+                        arrow.getLocation().distance(player.getLocation()));
                 vel = vel.multiply(Math.log(dis) / 200);
                 player.setVelocity(player.getVelocity().add(vel));
+                targetLoc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, targetLoc, 3, 0, 0, 0, 0.04);
                 ticks++;
             }
         }.runTaskTimer(PluginTest.pluginTest, 0, 1);
