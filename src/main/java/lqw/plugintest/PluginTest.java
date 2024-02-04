@@ -7,6 +7,7 @@ import lqw.plugintest.BasicRules.Welcome;
 import lqw.plugintest.MapInteractions.ChainElevator;
 import lqw.plugintest.MapInteractions.JumpPad;
 import lqw.plugintest.Props.CashBox;
+import lqw.plugintest.Props.Flash;
 import lqw.plugintest.Props.Landmine;
 import lqw.plugintest.Props.FireExtinguisher;
 import org.bukkit.ChatColor;
@@ -47,5 +48,6 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Landmine(), this);
         getServer().getPluginManager().registerEvents(new FireExtinguisher(),this);
         getServer().getPluginManager().registerEvents(new CashBox(),this);
+        getServer().getPluginManager().registerEvents(new Flash(),this);
     }
 }
