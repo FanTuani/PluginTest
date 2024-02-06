@@ -22,32 +22,32 @@ public class Flash implements Listener {
         Player player = e.getPlayer();
         PlayerInventory inventory = player.getInventory();
         if(inventory.getItemInMainHand().getType() != Material.POPPED_CHORUS_FRUIT)return;
-        Vector startLoc = player.getLocation().toVector(), dir = player.getLocation().getDirection(), vDir, endloc;
-        vDir = new Vector(dir.getX(), 0, dir.getZ()).normalize();
-        endloc = startLoc.add(vDir.multiply(10));
-        endloc.setY(0);
-        player.setVelocity(vDir.multiply(10));
-        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT , 1, 1);
+        Vector startLoc = player.getLocation().toVector(), dir = player.getLocation().getDirection(), vDir, v, endLoc, displacement;
+        double displacementDistance = 7, speed = 0.5;
+        startLoc.setY(0);
+        dir.setY(0);
+        vDir = v = displacement = dir;
+        displacement.multiply(displacementDistance);
+        endLoc = new Vector(startLoc.getX(), startLoc.getY(), startLoc.getZ());
+        endLoc.add(displacement);
+        v.multiply(speed);
+        player.setVelocity(v);
         new BukkitRunnable(){
-            int cot = 0;
+            public int timer = 0;
+            public double predis = 10005;
             @Override
             public void run() {
-                Vector v = player.getVelocity(), loc = player.getLocation().toVector();
-                loc.setY(0);
-                if(v.angle(vDir) > 1){
+                Vector nowLoc = player.getLocation().toVector(), nowVDir = player.getVelocity().normalize();
+                nowLoc.setY(0);
+                nowVDir.setY(0);
+                double dis = startLoc.distance(endLoc);
+                if(dis < 1 || nowVDir.angle(vDir) > 0.1 || timer > 30 || dis > predis){
                     player.setVelocity(new Vector(0,0,0));
                     cancel();
                 }
-                if(loc.distance(endloc) < 1){
-                    player.setVelocity(new Vector(0,0,0));
-                    cancel();
-                }
-                cot ++;
-                if(cot > 60){
-                    player.setVelocity(new Vector(0,0,0));
-                    cancel();
-                }
+                timer ++;
+                predis = dis;
             }
-        }.runTaskTimer(PluginTest.pluginTest, 0, 1);
+        }.runTaskTimer(PluginTest.pluginTest,0,1);
     }
 }
