@@ -38,13 +38,7 @@ public class LQW {
         v.multiply(speed);
         GameMode gameMode = player.getGameMode();
         player.setGameMode(GameMode.SPECTATOR);
-
-        Entity creeper = player.getWorld().spawnEntity(player.getLocation(), EntityType.CREEPER);
-        player.setSpectatorTarget(creeper);
-
-        creeper.setVelocity(dir);
-//        creeper.teleport(creeper.getLocation().setDirection(dir));
-
+        player.teleport(player.getLocation().setDirection(dir));
         new BukkitRunnable(){
             @Override
             public void run() {
