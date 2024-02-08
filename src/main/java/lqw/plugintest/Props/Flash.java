@@ -1,7 +1,9 @@
 package lqw.plugintest.Props;
 
 import lqw.plugintest.PluginTest;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,9 +25,10 @@ public class Flash implements Listener {
         PlayerInventory inventory = player.getInventory();
         if(inventory.getItemInMainHand().getType() != Material.POPPED_CHORUS_FRUIT)return;
         Vector startLoc = player.getLocation().toVector(), dir = player.getLocation().getDirection(), vDir, v, endLoc, displacement;
-        double displacementDistance = 7, speed = 0.5;
+        double displacementDistance = 10, speed = 0.5;
         startLoc.setY(0);
         dir.setY(0);
+        dir.normalize();
         vDir = v = displacement = dir;
         displacement.multiply(displacementDistance);
         endLoc = new Vector(startLoc.getX(), startLoc.getY(), startLoc.getZ());
@@ -34,19 +37,21 @@ public class Flash implements Listener {
         player.setVelocity(v);
         new BukkitRunnable(){
             public int timer = 0;
-            public double predis = 10005;
+            public double confirm = 0;
             @Override
             public void run() {
                 Vector nowLoc = player.getLocation().toVector(), nowVDir = player.getVelocity().normalize();
                 nowLoc.setY(0);
                 nowVDir.setY(0);
-                double dis = startLoc.distance(endLoc);
-                if(dis < 1 || nowVDir.angle(vDir) > 0.1 || timer > 30 || dis > predis){
+                if(startLoc.distance(nowLoc) >= startLoc.distance(endLoc)){
+                    player.setVelocity(new Vector(0,0,0));
+                    cancel();
+                }
+                if(nowVDir.angle(vDir) > 0.1 || timer > 30){
                     player.setVelocity(new Vector(0,0,0));
                     cancel();
                 }
                 timer ++;
-                predis = dis;
             }
         }.runTaskTimer(PluginTest.pluginTest,0,1);
     }
