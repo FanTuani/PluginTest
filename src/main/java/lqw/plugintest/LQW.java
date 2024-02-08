@@ -40,6 +40,7 @@ public class LQW {
         player.setGameMode(GameMode.SPECTATOR);
 
         Entity creeper = player.getWorld().spawnEntity(player.getLocation(), EntityType.CREEPER);
+//        ((LivingEntity)creeper).setAI(false);
         player.setSpectatorTarget(creeper);
 
         creeper.setVelocity(dir);
@@ -48,12 +49,13 @@ public class LQW {
         new BukkitRunnable(){
             @Override
             public void run() {
-                player.getLocation().setDirection(dir);
-                player.setVelocity(v);
+                creeper.getLocation().setDirection(dir);
+                creeper.setVelocity(v);
                 if(startLoc.distance(player.getLocation()) > startLoc.distance(endLoc)){
-                    player.setVelocity(new Vector(0,0,0));
-                    player.teleport(endLoc.setDirection(player.getLocation().getDirection()));
+                    creeper.setVelocity(new Vector(0,0,0));
+                    creeper.teleport(endLoc.setDirection(creeper.getLocation().getDirection()));
                     player.setGameMode(gameMode);
+                    creeper.remove();
                     isTransforming.remove(player.getUniqueId());
                     cancel();
                 }
