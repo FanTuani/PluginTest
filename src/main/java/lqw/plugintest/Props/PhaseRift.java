@@ -29,7 +29,7 @@ public class PhaseRift implements Listener {
         dir.multiply(0.1);
         for(int i = 1; i <= 60; i++){
             spawnLoc.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, loc,0,0,0,0, 1);
-            loc.add(dir);
+            loc = loc.add(dir);
         }
     }
     public void summonEndRift(Location spawnLoc){
@@ -37,7 +37,7 @@ public class PhaseRift implements Listener {
         dir.multiply(0.2);
         for(int i = 1; i <= 20; i++){
             spawnLoc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc,0, 0, 0, 0, 1);
-            loc.add(dir);
+            loc = loc.add(dir);
         }
     }
     @EventHandler
@@ -60,11 +60,11 @@ public class PhaseRift implements Listener {
     }
     @EventHandler
     public void onUseIronSword(PlayerInteractEvent event){
-        if(event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR)return;
-        if(event.getHand() != EquipmentSlot.HAND)return;
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) return;
+        if(event.getHand() != EquipmentSlot.HAND) return;
         Player player = event.getPlayer();
         PlayerInventory inventory = player.getInventory();
-        if(inventory.getItemInMainHand().getType() != Material.IRON_SWORD)return;
+        if(inventory.getItemInMainHand().getType() != Material.IRON_SWORD) return;
         Location startLoc = player.getLocation(), endLoc = LQW.aimSpace(player.getLocation(), maxDistance);
         if(startLoc.distance(endLoc) < 3)return;
         map.put(startLoc, endLoc);
