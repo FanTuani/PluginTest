@@ -28,7 +28,7 @@ public class Hook implements Listener {
         arrow.setGravity(false);
         arrow.setVelocity(player.getLocation().getDirection().multiply(3));
         arrow.addScoreboardTag("hook");
-        player.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.7f, 2);
+        player.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.8f, 2);
     }
 
     @EventHandler
@@ -42,6 +42,7 @@ public class Hook implements Listener {
         Location targetLoc = arrow.getLocation();
         if (targetLoc.distance(player.getLocation()) > 30) return;
         player.setGravity(false);
+        player.getVelocity().add(new Vector(0, 1, 0));
         arrow.remove();
 
         targetLoc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, targetLoc, 10, 0, 0, 0, 0.05);
@@ -63,6 +64,9 @@ public class Hook implements Listener {
                 if (player.getLocation().distance(targetLoc) < 1 || player.getLocation().distance(targetLoc) > 30) {
                     cancelRun(player);
                 }
+                if (player.isSneaking()) {
+                    cancelRun(player);
+                }
                 double speed = player.getVelocity().length();
                 if (speed < 0.25f && ticks > 20) {
                     cancelRun(player);
@@ -71,7 +75,7 @@ public class Hook implements Listener {
                 vel.setY(vel.getY() + 1);
                 double dis = Math.max(player.getVelocity().length(),
                         arrow.getLocation().distance(player.getLocation()));
-                vel = vel.multiply(Math.log(dis) / 200);
+                vel = vel.multiply(Math.log(dis) / 160);
                 player.setVelocity(player.getVelocity().add(vel));
                 targetLoc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, targetLoc, 3, 0, 0, 0, 0.04);
                 ticks++;
