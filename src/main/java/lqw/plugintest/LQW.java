@@ -1,14 +1,14 @@
 package lqw.plugintest;
 
-import org.bukkit.*;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import org.checkerframework.checker.guieffect.qual.PolyUIEffect;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -38,8 +38,13 @@ public class LQW {
         v.multiply(speed);
         GameMode gameMode = player.getGameMode();
         player.setGameMode(GameMode.SPECTATOR);
-        player.setVelocity(dir);
-        player.teleport(player.getLocation().setDirection(dir));
+
+        Entity creeper = player.getWorld().spawnEntity(player.getLocation(), EntityType.CREEPER);
+        player.setSpectatorTarget(creeper);
+
+        creeper.setVelocity(dir);
+//        creeper.teleport(creeper.getLocation().setDirection(dir));
+
         new BukkitRunnable(){
             @Override
             public void run() {
