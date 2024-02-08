@@ -3,9 +3,7 @@ package lqw.plugintest;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -15,7 +13,6 @@ import java.util.UUID;
 
 
 public class LQW {
-    public static Set<UUID> isTransforming = new HashSet<>();
     public static Location aimSpace(Location startLoc, double maxDistance){
         Vector dir = startLoc.getDirection(), loc = startLoc.toVector(), start = startLoc.toVector();
         World world = startLoc.getWorld();
@@ -29,37 +26,5 @@ public class LQW {
                 return loc.toLocation(world);
             }
         }
-    }
-    public static void trans(Location startLoc, Location endLoc, Player player, int speed){
-        if(isTransforming.contains(player.getUniqueId()))return;
-        isTransforming.add(player.getUniqueId());
-        Vector dir = endLoc.toVector().subtract(startLoc.toVector()).normalize(), v;
-        v = dir;
-        v.multiply(speed);
-        GameMode gameMode = player.getGameMode();
-        player.setGameMode(GameMode.SPECTATOR);
-
-        Entity creeper = player.getWorld().spawnEntity(player.getLocation(), EntityType.CREEPER);
-//        ((LivingEntity)creeper).setAI(false);
-        player.setSpectatorTarget(creeper);
-
-        creeper.setVelocity(dir);
-//        creeper.teleport(creeper.getLocation().setDirection(dir));
-
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                creeper.getLocation().setDirection(dir);
-                creeper.setVelocity(v);
-                if(startLoc.distance(player.getLocation()) > startLoc.distance(endLoc)){
-                    creeper.setVelocity(new Vector(0,0,0));
-                    creeper.teleport(endLoc.setDirection(creeper.getLocation().getDirection()));
-                    player.setGameMode(gameMode);
-                    creeper.remove();
-                    isTransforming.remove(player.getUniqueId());
-                    cancel();
-                }
-            }
-        }.runTaskTimer(PluginTest.pluginTest, 0, 1);
     }
 }
