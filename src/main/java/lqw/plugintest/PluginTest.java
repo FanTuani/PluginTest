@@ -6,10 +6,7 @@ import lqw.plugintest.BasicRules.SpawnSupply;
 import lqw.plugintest.BasicRules.Welcome;
 import lqw.plugintest.MapInteractions.ChainElevator;
 import lqw.plugintest.MapInteractions.JumpPad;
-import lqw.plugintest.Props.CashBox;
-import lqw.plugintest.Props.Flash;
-import lqw.plugintest.Props.Landmine;
-import lqw.plugintest.Props.FireExtinguisher;
+import lqw.plugintest.Props.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -49,5 +46,6 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new FireExtinguisher(),this);
         getServer().getPluginManager().registerEvents(new CashBox(),this);
         getServer().getPluginManager().registerEvents(new Flash(),this);
+        getServer().getPluginManager().registerEvents(new PhaseRift(),this);
     }
 }
