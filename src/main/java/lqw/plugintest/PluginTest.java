@@ -45,6 +45,7 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Landmine(), this);
         getServer().getPluginManager().registerEvents(new FireExtinguisher(),this);
         getServer().getPluginManager().registerEvents(new CashBox(),this);
+        getServer().getPluginManager().registerEvents(new Hook(),this);
         getServer().getPluginManager().registerEvents(new Flash(),this);
         getServer().getPluginManager().registerEvents(new PhaseRift(),this);
     }

@@ -1,12 +1,11 @@
 package lqw.plugintest.Props;
 
 import org.bukkit.Material;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 
 public class CashBox extends Movable implements Listener {
-    public CashBox(){
+    public CashBox() {
         blockName = Material.GOLD_BLOCK.name();
     }
 
