@@ -28,8 +28,8 @@ public class PhaseRift implements Listener {
     private double speed = 0.5;
     HashMap<Location, Location> map = new HashMap<>();
 
-    private void trans(Location startLoc, Location endLoc, Player player, double speed){
-        if(isTransforming.contains(player.getUniqueId()))return;
+    private void trans(Location startLoc, Location endLoc, Player player, double speed) {
+        if (isTransforming.contains(player.getUniqueId())) return;
         isTransforming.add(player.getUniqueId());
         Vector dir = endLoc.toVector().subtract(startLoc.toVector()).normalize(), v;
         v = dir;
@@ -44,14 +44,14 @@ public class PhaseRift implements Listener {
         enderman.setVelocity(v);
         enderman.setInvisible(true);
         enderman.setInvulnerable(true);
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             @Override
             public void run() {
                 enderman.teleport(enderman.getLocation().setDirection(dir));
                 enderman.setVelocity(v);
                 player.setSpectatorTarget(enderman);
-                if(startLoc.distance(player.getLocation()) > startLoc.distance(endLoc)){
-                    enderman.setVelocity(new Vector(0,0,0));
+                if (startLoc.distance(player.getLocation()) > startLoc.distance(endLoc)) {
+                    enderman.setVelocity(new Vector(0, 0, 0));
                     enderman.teleport(endLoc.setDirection(enderman.getLocation().getDirection()));
                     player.setGameMode(gameMode);
                     enderman.remove();
@@ -106,7 +106,7 @@ public class PhaseRift implements Listener {
         Player player = event.getPlayer();
         PlayerInventory inventory = player.getInventory();
         if (inventory.getItemInMainHand().getType() != Material.IRON_SWORD) return;
-        Location startLoc = player.getLocation(), endLoc = LQW.aimSpace(player.getLocation(), maxDistance);
+        Location startLoc = player.getLocation(), endLoc = LQW.aimSpace(player.getEyeLocation(), maxDistance);
         if (startLoc.distance(endLoc) < 3) return;
         map.put(startLoc, endLoc);
         trans(startLoc, endLoc, player, 5);
