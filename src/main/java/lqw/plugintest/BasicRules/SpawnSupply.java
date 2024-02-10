@@ -33,6 +33,7 @@ public class SpawnSupply implements Listener {
 
     @EventHandler
     public void respawnSupply(PlayerPostRespawnEvent event) {
+        if (respawnSuppluies == null) return;
         Player player = event.getPlayer();
         Inventory inventory = player.getInventory();
         for(Object i : respawnSuppluies){
