@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -37,17 +38,17 @@ public class ADS implements Listener {
                     Vector vector = predictLoc.subtract(snowBallSpawnLoc).toVector();
                     snowBallSpawnLoc.add(vector.normalize());
 
-                    Snowball snowball = adsLoc.getWorld().spawn(snowBallSpawnLoc, Snowball.class);
-                    snowball.setGravity(false);
-                    snowball.setVelocity(vector.normalize());
+                    Arrow arrow = adsLoc.getWorld().spawn(snowBallSpawnLoc, Arrow.class);
+                    arrow.setGravity(false);
+                    arrow.setVelocity(vector.normalize());
                     new BukkitRunnable() {
                         int ticks = 0;
 
                         @Override
                         public void run() {
                             if (ticks == 100)
-                                snowball.remove();
-                            snowball.setVelocity(vector.normalize());
+                                arrow.remove();
+                            arrow.setVelocity(vector.normalize());
                             ticks++;
                         }
                     }.runTaskTimer(PluginTest.pluginTest, 0, 1);
