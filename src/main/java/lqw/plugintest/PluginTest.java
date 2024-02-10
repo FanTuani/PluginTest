@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 public final class PluginTest extends JavaPlugin {
     public static PluginTest pluginTest;
@@ -21,6 +22,8 @@ public final class PluginTest extends JavaPlugin {
         for (Player player : getServer().getOnlinePlayers()) { //reload info
             player.sendTitle(ChatColor.GREEN + "Reloaded!", "", 5, 10, 5);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 1f);
+            LQW.lastVecLoc.put(player, player.getLocation().toVector());
+            LQW.nowVelocity.put(player, new Vector(0, 0, 0));
         }
         registerEvents();
         PluginTest.pluginTest = this;
@@ -43,10 +46,12 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BreathToHeal(this), this);
         getServer().getPluginManager().registerEvents(new JumpPad(this), this);
         getServer().getPluginManager().registerEvents(new Landmine(), this);
-        getServer().getPluginManager().registerEvents(new FireExtinguisher(),this);
-        getServer().getPluginManager().registerEvents(new CashBox(),this);
-        getServer().getPluginManager().registerEvents(new Hook(),this);
-        getServer().getPluginManager().registerEvents(new Flash(),this);
-        getServer().getPluginManager().registerEvents(new PhaseRift(),this);
+        getServer().getPluginManager().registerEvents(new FireExtinguisher(), this);
+        getServer().getPluginManager().registerEvents(new CashBox(), this);
+        getServer().getPluginManager().registerEvents(new Hook(), this);
+        getServer().getPluginManager().registerEvents(new Flash(), this);
+        getServer().getPluginManager().registerEvents(new PhaseRift(), this);
+        getServer().getPluginManager().registerEvents(new ADS(), this);
+        getServer().getPluginManager().registerEvents(new LQW(), this);
     }
 }

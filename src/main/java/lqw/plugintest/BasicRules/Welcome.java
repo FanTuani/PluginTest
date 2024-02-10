@@ -6,10 +6,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.util.Vector;
+import lqw.plugintest.LQW;
 
 public class Welcome implements Listener {
     @EventHandler
     public void welcomePlayer(PlayerJoinEvent event) {
+        Player thisPlayer = event.getPlayer();
+        LQW.lastVecLoc.put(thisPlayer, thisPlayer.getLocation().toVector());
+        LQW.nowVelocity.put(thisPlayer, new Vector(0, 0, 0));
         for (Player player : event.getPlayer().getServer().getOnlinePlayers()) {
             int onlineCount = event.getPlayer().getServer().getOnlinePlayers().size();
             String subTitle = ChatColor.YELLOW + "Online Player Count: " + onlineCount;
