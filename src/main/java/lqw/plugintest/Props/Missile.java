@@ -47,6 +47,7 @@ public class Missile implements Listener {
                     LivingEntity nearestTarget = null;
                     for (Entity target : list) {
                         if (!(target instanceof LivingEntity)) continue;
+                        if(target == player) continue;
                         if (target.isDead()) return;
                         if (arrow.getLocation().distance(target.getLocation()) < nearestDistance) {
                             nearestDistance = arrow.getLocation().distance(target.getLocation());
