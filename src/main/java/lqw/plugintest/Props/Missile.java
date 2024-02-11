@@ -1,9 +1,7 @@
 package lqw.plugintest.Props;
 
 import lqw.plugintest.PluginTest;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -43,34 +41,50 @@ public class Missile implements Listener {
             @Override
             public void run() {
                 arrow.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, arrow.getLocation(), 1, 0, 0, 0, 0);
-                if (ticks >= 10) {
+                if (ticks >= 20) {
                     List<Entity> list = arrow.getNearbyEntities(50, 50, 50);
                     double nearestDistance = 500000;
                     LivingEntity nearestTarget = null;
                     for (Entity target : list) {
-                        if (!(target instanceof LivingEntity) || target == player) continue;
+                        if (!(target instanceof LivingEntity)) continue;
+                        if (target.isDead()) return;
                         if (arrow.getLocation().distance(target.getLocation()) < nearestDistance) {
                             nearestDistance = arrow.getLocation().distance(target.getLocation());
                             nearestTarget = (LivingEntity) target;
                         }
                     }
-                    if (nearestTarget != null) {
-                        arrow.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, arrow.getLocation(), 10, 0, 0, 0, 0.1);
-                        arrow.getWorld().spawnParticle(Particle.FLAME, arrow.getLocation(), 10, 0, 0, 0, 0.1);
+                    Location arrowLoc = arrow.getLocation();
+                    if (nearestTarget != null) { // target locked
+                        if (nearestTarget instanceof Player) {
+                            Player targetPlayer = (Player) nearestTarget;
+                            targetPlayer.playSound(targetPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 0.5f,
+                                    2);
+                            if (ticks % 4 < 2)
+                                targetPlayer.sendActionBar(ChatColor.RED + "YOU ARE LOCKED BY MISSILE!");
+                            else targetPlayer.sendActionBar(ChatColor.BLUE + "YOU ARE LOCKED BY MISSILE!");
+                        }
+
+                        arrow.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, arrowLoc, 10, 0, 0, 0, 0.1);
+                        arrow.getWorld().spawnParticle(Particle.FLAME, arrowLoc, 10, 0, 0, 0, 0.1);
+                        arrow.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, arrowLoc, 5, 0.5, 0.5, 0.5, 0);
+
                         Vector vector = nearestTarget.getEyeLocation().subtract(arrow.getLocation()).toVector();
-                        arrow.setVelocity(vector.normalize().multiply(2));
+                        arrow.setVelocity(vector.normalize().multiply(1.5)); // missile speed
+                        arrow.getWorld().playSound(arrow.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 2, 1);
                     }
                     if (!arrow.isValid() || arrow.isInBlock()) { // hit
-                        arrow.getWorld().createExplosion(arrow.getLocation(), 4);
+                        arrow.getWorld().createExplosion(arrowLoc, 4); // boom
 
-                        arrow.getWorld().spawnParticle(Particle.CRIT_MAGIC, arrow.getLocation(), 100, 2, 2, 2, 1);
-                        arrow.getWorld().spawnParticle(Particle.CRIT, arrow.getLocation(), 100, 2, 2, 2, 1);
+                        arrow.getWorld().spawnParticle(Particle.CRIT_MAGIC, arrowLoc, 100, 2, 2, 2, 1);
+                        arrow.getWorld().spawnParticle(Particle.CRIT, arrowLoc, 100, 2, 2, 2, 1);
+                        arrow.getWorld().spawnParticle(Particle.FALLING_LAVA, arrowLoc, 100, 2, 2, 2, 1);
+                        arrow.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, arrowLoc, 100, 2, 2, 2, 1);
 
                         arrow.remove();
                         cancel();
                     }
                 }
-                if (ticks >= 100) {
+                if (ticks >= 600) {
                     arrow.remove();
                     cancel();
                 }
@@ -78,18 +92,4 @@ public class Missile implements Listener {
             }
         }.runTaskTimer(PluginTest.pluginTest, 0, 1);
     }
-
-//    @EventHandler
-//    public void onPlayerHitByMissile(ProjectileHitEvent event) {
-//        if (!(event.getHitEntity() instanceof Player) || !(event.getEntity() instanceof Arrow)) return;
-//        Arrow arrow = (Arrow) event.getEntity();
-//        if (!arrow.getName().equals("Missile")) return;
-//        arrow.remove();
-//
-//        Player player = (Player) event.getHitEntity();
-//        player.damage(1);
-//        player.playSound(player.getLocation(), Sound.BLOCK_BASALT_BREAK, 1, 2);
-//        player.getWorld().spawnParticle(Particle.CRIT_MAGIC, player.getEyeLocation(), 100, 1, 1, 1, 1);
-//        player.getWorld().spawnParticle(Particle.CRIT, player.getEyeLocation(), 100, 1, 1, 1, 1);
-//    }
 }
