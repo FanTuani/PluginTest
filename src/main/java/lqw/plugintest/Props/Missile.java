@@ -47,7 +47,7 @@ public class Missile implements Listener {
                     LivingEntity nearestTarget = null;
                     for (Entity target : list) {
                         if (!(target instanceof LivingEntity)) continue;
-                        if(target == player) continue;
+                        if (target == player) continue;
                         if (target.isDead()) return;
                         if (arrow.getLocation().distance(target.getLocation()) < nearestDistance) {
                             nearestDistance = arrow.getLocation().distance(target.getLocation());
@@ -73,7 +73,7 @@ public class Missile implements Listener {
                         arrow.setVelocity(vector.normalize().multiply(1.5)); // missile speed
                         arrow.getWorld().playSound(arrow.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 2, 1);
                     }
-                    if (!arrow.isValid() || arrow.isInBlock()) { // hit
+                    if (!arrow.getNearbyEntities(1, 1, 1).isEmpty() || !arrow.isValid() || arrow.isInBlock()) {
                         arrow.getWorld().createExplosion(arrowLoc, 4); // boom
 
                         arrow.getWorld().spawnParticle(Particle.CRIT_MAGIC, arrowLoc, 100, 2, 2, 2, 1);

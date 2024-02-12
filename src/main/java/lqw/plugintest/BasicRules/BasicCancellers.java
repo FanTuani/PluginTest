@@ -1,5 +1,6 @@
 package lqw.plugintest.BasicRules;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
@@ -17,6 +18,7 @@ public class BasicCancellers implements Listener {
 
     @EventHandler
     public void noFallDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
         if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             event.setCancelled(true);
         }
