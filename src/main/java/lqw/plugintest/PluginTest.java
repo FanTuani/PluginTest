@@ -55,5 +55,7 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LQW(), this);
         getServer().getPluginManager().registerEvents(new Missile(), this);
         getServer().getPluginManager().registerEvents(new DecoyMissile(), this);
+        getServer().getPluginManager().registerEvents(new MeteorStrike(), this);
+
     }
 }
