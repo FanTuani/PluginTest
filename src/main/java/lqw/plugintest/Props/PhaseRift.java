@@ -23,9 +23,8 @@ import java.util.*;
 
 public class PhaseRift implements Listener {
     public static Set<UUID> isTransforming = new HashSet<>();
-    private Vector dir = new Vector(3, 6, 3);
-    private int maxDistance = 50, time = 1000;
-    private double speed = 0.5;
+    private final Vector dir = new Vector(3, 6, 3);
+    private final int maxDistance = 50, time = 1000;
     HashMap<Location, Location> map = new HashMap<>();
 
     private void trans(Location startLoc, Location endLoc, Player player, double speed) {
@@ -106,6 +105,7 @@ public class PhaseRift implements Listener {
         Player player = event.getPlayer();
         PlayerInventory inventory = player.getInventory();
         if (inventory.getItemInMainHand().getType() != Material.IRON_SWORD) return;
+
         Location startLoc = player.getLocation(), endLoc = LQW.aimSpace(player.getEyeLocation(), maxDistance);
         if (startLoc.distance(endLoc) < 3) return;
         map.put(startLoc, endLoc);
