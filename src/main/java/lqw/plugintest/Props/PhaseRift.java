@@ -86,7 +86,10 @@ public class PhaseRift implements Listener {
 //            summonAimingRift(LQW.aimSpace(player.getLocation(), 20));
 //        }
         if (player.getInventory().getItemInMainHand().getType() == Material.IRON_SWORD) {
-            summonEndRift(LQW.aimSpace(player.getLocation().add(0, 1, 0), maxDistance));
+            Location loc = LQW.aimSpace(player.getEyeLocation(), maxDistance);
+            loc.setDirection(new Vector(loc.getDirection().getX(), -1, loc.getDirection().getX()));
+            loc = LQW.aimSpace(loc, 100);
+            LQW.indicatorCycle(player, loc, 1);
         }
         Location playerLocation = player.getLocation();
         for (Map.Entry<Location, Location> entry : map.entrySet()) {
@@ -100,12 +103,10 @@ public class PhaseRift implements Listener {
 
     @EventHandler
     public void onUseIronSword(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) return;
-        if (event.getHand() != EquipmentSlot.HAND) return;
+        if (LQW.isNotUsing(event, Material.IRON_SWORD.name())) return;
         Player player = event.getPlayer();
         PlayerInventory inventory = player.getInventory();
         if (inventory.getItemInMainHand().getType() != Material.IRON_SWORD) return;
-
         Location startLoc = player.getLocation(), endLoc = LQW.aimSpace(player.getEyeLocation(), maxDistance);
         if (startLoc.distance(endLoc) < 3) return;
         map.put(startLoc, endLoc);
