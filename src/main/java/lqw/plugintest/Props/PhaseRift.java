@@ -12,10 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -24,9 +22,8 @@ import java.util.*;
 
 public class PhaseRift implements Listener {
     public static Set<UUID> isTransforming = new HashSet<>();
-    private Vector dir = new Vector(3, 6, 3);
-    private int maxDistance = 50, time = 1000;
-    private double speed = 0.5;
+    private final Vector dir = new Vector(3, 6, 3);
+    private final int maxDistance = 50, time = 1000;
     HashMap<Location, Location> map = new HashMap<>();
 
     private void trans(Location startLoc, Location endLoc, Player player, double speed) {
@@ -89,7 +86,7 @@ public class PhaseRift implements Listener {
 //        }
         if (player.getInventory().getItemInMainHand().getType() == Material.IRON_SWORD) {
             Location loc = LQW.aimSpace(player.getEyeLocation(), maxDistance);
-            loc.setDirection(new Vector(loc.getDirection().getX(), -1,loc.getDirection().getX()));
+            loc.setDirection(new Vector(loc.getDirection().getX(), -1, loc.getDirection().getX()));
             loc = LQW.aimSpace(loc, 100);
             LQW.indicatorCycle(player, loc, 1);
         }
@@ -105,10 +102,11 @@ public class PhaseRift implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onUseIronSword(PlayerInteractEvent event) {
-        if(LQW.isNotUsing(event, Material.IRON_SWORD.name()))return;
+        if (LQW.isNotUsing(event, Material.IRON_SWORD.name())) return;
         Player player = event.getPlayer();
-        Location startLoc = player.getLocation(), endLoc = LQW.aimSpace(player.getEyeLocation(), maxDistance);
         PlayerInventory inventory = player.getInventory();
+        if (inventory.getItemInMainHand().getType() != Material.IRON_SWORD) return;
+        Location startLoc = player.getLocation(), endLoc = LQW.aimSpace(player.getEyeLocation(), maxDistance);
         if (startLoc.distance(endLoc) < 3) return;
         map.put(startLoc, endLoc);
         trans(startLoc, endLoc, player, 5);
