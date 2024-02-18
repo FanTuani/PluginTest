@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
@@ -21,7 +22,7 @@ import java.util.UUID;
 public class MeteorStrike implements Listener {
     HashMap<UUID, BukkitRunnable>map = new HashMap<>();
     HashMap<UUID, Integer>timeMap = new HashMap<>();
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void useOrangeDye(PlayerInteractEvent event){
         if(LQW.isNotUsing(event, Material.ORANGE_DYE.name(), 4))return;
         Player player = event.getPlayer();
@@ -29,6 +30,7 @@ public class MeteorStrike implements Listener {
             if(timeMap.get(player.getUniqueId()).intValue() < 3)return;
             map.get(player.getUniqueId()).cancel();
             map.remove(player.getUniqueId());
+            LQW.removeNoInteractPlayer(player, Material.ORANGE_DYE, 4);
             player.setVelocity(new Vector(0, -10, 0));
             player.setInvisible(false);
             player.setFlying(false);
@@ -67,6 +69,7 @@ public class MeteorStrike implements Listener {
                 }
             };
             bukkitRunnable.runTaskTimer(PluginTest.pluginTest,0, 1);
+            LQW.addNoInteractPlayer(player, Material.ORANGE_DYE, 4);
             map.put(player.getUniqueId(), bukkitRunnable);
             player.setInvisible(true);
             player.setAllowFlight(true);

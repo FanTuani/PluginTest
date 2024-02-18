@@ -37,7 +37,6 @@ public class Flash implements Listener {
         player.setVelocity(v);
         new BukkitRunnable(){
             public int timer = 0;
-            public double confirm = 0;
             @Override
             public void run() {
                 Vector nowLoc = player.getLocation().toVector(), nowVDir = player.getVelocity().normalize();

@@ -10,6 +10,7 @@ import org.bukkit.entity.Enderman;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -102,7 +103,7 @@ public class PhaseRift implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onUseIronSword(PlayerInteractEvent event) {
         if(LQW.isNotUsing(event, Material.IRON_SWORD.name()))return;
         Player player = event.getPlayer();
