@@ -78,6 +78,20 @@ public class LQW implements Listener {
             player.spawnParticle(Particle.CRIT, loc.clone().add(delta), 1, 0, 0, 0, 0.2);
         }
     }
+
+    public static void indicatorCycle(Player player, Location centerLoc, double dis,  Particle particle){
+        Vector delta = new Vector(0, 0.1, 0);
+        Location loc = centerLoc.clone();
+        for(int i = 0;i < 50; i++, loc.add(delta)){
+            player.spawnParticle(particle, loc, 1, 0, 0, 0, 0.1);
+        }
+        delta.setY(0);delta.setX(dis);
+        loc = centerLoc.clone();
+        for(int i = 0; i <= 360; i ++){
+            delta.rotateAroundY(Math.toRadians(i));
+            player.spawnParticle(particle, loc.clone().add(delta), 1, 0, 0, 0, 0.2);
+        }
+    }
     private static boolean onPlayerInteract(PlayerInteractEvent event){
         Player player = event.getPlayer();
         UUID id = player.getUniqueId();
