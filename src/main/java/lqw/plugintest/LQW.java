@@ -1,10 +1,11 @@
 package lqw.plugintest;
 
+import com.destroystokyo.paper.entity.Pathfinder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,6 +18,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -192,5 +195,22 @@ public class LQW implements Listener {
     public static void removeNoInteractPlayer(Player player, Material material, int index){
         UUID id = player.getUniqueId();
         onlyItemIndex.remove(id);
+    }
+
+//    public static boolean canSee(Entity entity1, Entity entity2){
+//        Vector dir = entity1.getLocation().toVector().subtract(entity2.getLocation().toVector()).normalize().multiply(0.5);
+//        for(Location loc = entity2.getLocation(); loc.subtract(entity2.getLocation()).length()>1; loc.add(dir)){
+//            if(!loc.getWorld().getBlockAt(loc).isPassable()){
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+
+    @EventHandler
+    public void test(PlayerInteractEvent event) {
+        if (isNotUsing(event, Material.STICK.name())) return;
+        Player player = event.getPlayer();
+        player.damage(1, player);
     }
 }

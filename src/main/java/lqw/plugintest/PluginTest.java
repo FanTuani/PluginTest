@@ -7,6 +7,7 @@ import lqw.plugintest.BasicRules.Welcome;
 import lqw.plugintest.MapInteractions.ChainElevator;
 import lqw.plugintest.MapInteractions.JumpPad;
 import lqw.plugintest.Props.*;
+import lqw.plugintest.Props.BatKing.BatSpawner;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -56,6 +57,6 @@ public final class PluginTest extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Missile(), this);
         getServer().getPluginManager().registerEvents(new DecoyMissile(), this);
         getServer().getPluginManager().registerEvents(new MeteorStrike(), this);
-
+        getServer().getPluginManager().registerEvents(new BatSpawner(), this);
     }
 }
