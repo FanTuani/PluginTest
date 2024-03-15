@@ -1,5 +1,6 @@
 package lqw.plugintest.Props;
 
+import lqw.plugintest.LQW;
 import lqw.plugintest.PluginTest;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,11 +20,8 @@ import org.bukkit.util.Vector;
 public class Flash implements Listener {
     @EventHandler
     public void onUsingFlash(PlayerInteractEvent e){
-        if(e.getAction() != Action.RIGHT_CLICK_BLOCK && e.getAction() != Action.RIGHT_CLICK_AIR)return;
-        if(e.getHand() != EquipmentSlot.HAND)return;
+        if(LQW.isNotUsing(e, Material.POPPED_CHORUS_FRUIT.name()))return;
         Player player = e.getPlayer();
-        PlayerInventory inventory = player.getInventory();
-        if(inventory.getItemInMainHand().getType() != Material.POPPED_CHORUS_FRUIT)return;
         Vector startLoc = player.getLocation().toVector(), dir = player.getLocation().getDirection(), vDir, v, endLoc, displacement;
         double displacementDistance = 10, speed = 0.5;
         startLoc.setY(0);

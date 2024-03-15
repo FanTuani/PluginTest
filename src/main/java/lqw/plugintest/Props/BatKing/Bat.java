@@ -27,10 +27,12 @@ public class Bat implements Listener {
     private LivingEntity spawner;
     private LivingEntity enemy, bat;
     private boolean hasEnemy = false;
+    public Bat thisClass = this;
     public void SpawnBat(LivingEntity spawner1, Location location){
         spawner = spawner1;
         bat = (LivingEntity) location.getWorld().spawnEntity(location, EntityType.BAT);
-//        bat.setAI(false);
+        bat.setCustomName(spawner.getName() + "的" + "Bat");
+        bat.setCustomNameVisible(false);
         PluginTest.pluginTest.getServer().getPluginManager().registerEvents(this, PluginTest.pluginTest);
         new BukkitRunnable(){
             private int timer = 0;
@@ -56,6 +58,11 @@ public class Bat implements Listener {
                         }
                     }
 
+                }
+                if(timer > containTime){
+                    bat.remove();
+                    PluginTest.pluginTest.getServer().getPluginManager().registerEvents(thisClass, PluginTest.pluginTest);
+                    cancel();
                 }
             }
         }.runTaskTimer(PluginTest.pluginTest, 0, 1);

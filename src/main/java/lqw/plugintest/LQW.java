@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -211,6 +212,15 @@ public class LQW implements Listener {
     public void test(PlayerInteractEvent event) {
         if (isNotUsing(event, Material.STICK.name())) return;
         Player player = event.getPlayer();
+        player.sendMessage(event.getAction().name());
         player.damage(1, player);
+    }
+    @EventHandler
+    public void preMisHit(EntityDamageByEntityEvent event){
+        Entity dam = event.getDamager(), en = event.getEntity();
+        if(dam instanceof Player && en instanceof Player){
+            Player damager = (Player) dam, entity = (Player) en;
+//            if(damager.get)
+        }
     }
 }
