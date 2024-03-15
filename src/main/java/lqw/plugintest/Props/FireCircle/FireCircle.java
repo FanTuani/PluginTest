@@ -27,7 +27,7 @@ public class FireCircle implements Listener {
         subLoc[0] = dir.getCrossProduct(new Vector(1, 0, 0)).normalize().multiply(radius);
         for(int i = 1; i < 10; i ++){
             subLoc[i] = subLoc[i - 1].clone();
-            subLoc[i].rotateAroundNonUnitAxis(dir, 360/10);
+            subLoc[i].rotateAroundNonUnitAxis(dir, 360/9);
         }
         new BukkitRunnable(){
             int timer = 0;
